@@ -70,12 +70,12 @@ const Header = ({onSearch}) => {
                     CodeBin
                 </Typography>
                 <div style={{flexGrow: 1}}/>
-                <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                        <Search />
-                    </div>
-                    {
-                        onSearch && <InputBase
+                {
+                    onSearch && <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <Search />
+                        </div>
+                        <InputBase
                             placeholder="검색"
                             classes={{
                                 root: classes.inputRoot,
@@ -84,8 +84,8 @@ const Header = ({onSearch}) => {
                             inputProps={{ 'aria-label': 'search' }}
                             onChange={onSearch}
                         />
-                    }
-                </div>
+                    </div>
+                }
             </Toolbar>
         </AppBar>
     )
