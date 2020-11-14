@@ -7,5 +7,5 @@ export default async (req, res) => {
   const result = await db.knex('posts')
 
   res.statusCode = 200
-  res.json(result.slice(start, end))
+  res.json(result.filter(r=>r.title).slice(start, end))
 }
