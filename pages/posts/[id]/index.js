@@ -15,7 +15,7 @@ class Post extends Component {
 
     async componentDidMount() {
         this.setState({
-            item: await fetch('/api/posts/' + window.location.pathname.split('/').pop()).then(res=>res.json())
+            item: await fetch('/api/posts/' + window.location.pathname.split('/').pop()).then(res => res.json())
         })
     }
 
@@ -35,12 +35,18 @@ class Post extends Component {
                             <CardHeader title={i.title}/>
                             <Divider/>
                             <div style={{paddingLeft: 10, paddingRight: 10}}>
-                                <Typography>
+                                <Typography variant="h6">
                                     Code
                                 </Typography>
                                 <Highlight>
                                     {i.content}
                                 </Highlight>
+                                <Typography variant="h6">
+                                    Raw
+                                </Typography>
+                                <textarea rows={10} style={{
+                                    width: '100%'
+                                }}>{i.content}</textarea>
                             </div>
                         </Card> : <CircularProgress/>
                     }
