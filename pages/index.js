@@ -1,7 +1,7 @@
 import Highlight from 'react-highlight.js'
 import Head from 'next/head'
 import React from "react";
-import {CardContent, CardHeader, Divider, IconButton, Toolbar} from "@material-ui/core";
+import {CardHeader, Divider, IconButton, Toolbar} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -12,9 +12,11 @@ import Header from "../utils/Header";
 
 export default class Home extends React.Component {
     state = {
-        items: [],
+        items: null,
         loading: true,
-        max: 0
+        max: 0,
+        isSearch: false,
+        query: ''
     }
 
     async componentDidMount() {
@@ -30,18 +32,25 @@ export default class Home extends React.Component {
                 <Head>
                     <title>CodeBin</title>
                 </Head>
-                <Header/>
+                <Header onSearch={async e => {
+                    if (e.target.value !== '') {
+                        this.setState({isSearch: true, query: e.target.value, items: await (await fetch(`/api/search/${e.target.value}`)).json()})
+                    } else {
+                        this.setState({isSearch: false})
+                        return this.componentDidMount()
+                    }
+                }}/>
                 <Toolbar/>
                 <Container>
-                    <InfiniteScroll next={async () => {
-                        const items = await (await fetch(`/api/posts?start=0&end=${this.state.items.length + 10}`)).json()
+                    {this.state.items ? <InfiniteScroll next={async () => {
+                        const items = await (await fetch(`${this.state.isSearch ? `/api/search/${this.state.query}` : '/api/posts'}?start=0&end=${this.state.items.length + 10}`)).json()
                         this.setState({
                             items,
                             max: await (await fetch('/api/posts/length')).json()
                         })
                     }} hasMore={this.state.max !== this.state.items.length}
-                                    loader={<CircularProgress color="primary" style={{margin: 10}}/>}
-                                    dataLength={this.state.items.length}>
+                                                        loader={<CircularProgress color="primary" style={{margin: 10}}/>}
+                                                        dataLength={this.state.items.length}>
                         {
                             this.state.items.map((i, k) => (
                                 <Card style={{
@@ -60,7 +69,7 @@ export default class Home extends React.Component {
                                 </Card>
                             ))
                         }
-                    </InfiniteScroll>
+                    </InfiniteScroll> : '로딩중...'}
                 </Container>
             </div>
         )
