@@ -15,11 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="809b5965-15d1-443a-a086-ecfbcd332321" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrate.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrate.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/posts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/posts/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/posts/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Header.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +75,7 @@
       <updated>1605325191168</updated>
       <workItem from="1605325192270" duration="20074000" />
       <workItem from="1605349826672" duration="11000" />
-      <workItem from="1605352125913" duration="2467000" />
+      <workItem from="1605352125913" duration="2560000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar"
 import InputBase from "@material-ui/core/InputBase"
 import {Search} from "@material-ui/icons"
 import makeStyles from "@material-ui/core/styles/makeStyles"
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,13 +68,15 @@ const Header = ({onSearch}) => {
         <AppBar position="fixed">
             <Toolbar>
                 <Typography variant="h6">
-                    CodeBin
+                    <Link href="/">
+                        CodeBin
+                    </Link>
                 </Typography>
                 <div style={{flexGrow: 1}}/>
                 {
                     onSearch && <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                            <Search />
+                            <Search/>
                         </div>
                         <InputBase
                             placeholder="검색"
@@ -81,7 +84,7 @@ const Header = ({onSearch}) => {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            inputProps={{ 'aria-label': 'search' }}
+                            inputProps={{'aria-label': 'search'}}
                             onChange={onSearch}
                         />
                     </div>
