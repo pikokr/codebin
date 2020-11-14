@@ -3,3 +3,5 @@ create table posts (
     content text not null,
     title text not null
 );
+
+alter table posts add language text;

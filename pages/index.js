@@ -1,14 +1,27 @@
+import Highlight from 'react-highlight.js'
 import Head from 'next/head'
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import {CardContent, CardHeader, Grid, Toolbar, Typography} from "@material-ui/core";
+import {CardContent, CardHeader, Divider, IconButton, Toolbar} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {Visibility} from "@material-ui/icons";
+import Router from "next/router";
+import Header from "../utils/Header";
 
 export default class Home extends React.Component {
     state = {
-        items: Array.from(new Array(1000).keys()).map(r=>({title:`ITEM${r}`,content:'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto ducimus, esse facilis hic minima modi nihil repellendus reprehenderit? Ad commodi dolorem explicabo fuga non quaerat qui quos sapiente veritatis voluptate.'})),
-        loading: true
+        items: [],
+        loading: true,
+        max: 0
+    }
+
+    async componentDidMount() {
+        this.setState({
+            items: await (await fetch('/api/posts')).json(),
+            max: await (await fetch('/api/posts/length')).json()
+        })
     }
 
     render() {
@@ -17,29 +30,37 @@ export default class Home extends React.Component {
                 <Head>
                     <title>CodeBin</title>
                 </Head>
-                <AppBar position="fixed">
-                    <Toolbar>
-                        <Typography variant="h6">
-                            CodeBin
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+                <Header/>
                 <Toolbar/>
                 <Container>
-                    <Grid container spacing={2}>
+                    <InfiniteScroll next={async () => {
+                        const items = await (await fetch(`/api/posts?start=0&end=${this.state.items.length + 10}`)).json()
+                        this.setState({
+                            items,
+                            max: await (await fetch('/api/posts/length')).json()
+                        })
+                    }} hasMore={this.state.max !== this.state.items.length}
+                                    loader={<CircularProgress color="primary" style={{margin: 10}}/>}
+                                    dataLength={this.state.items.length}>
                         {
-                            this.state.items.map(i => (
-                                <Grid item xs={12}>
-                                    <Card>
-                                        <CardHeader title={i.title}/>
-                                        <CardContent>
+                            this.state.items.map((i, k) => (
+                                <Card style={{
+                                    width: '100%',
+                                    marginTop: 10
+                                }} key={k} variant="outlined">
+                                    <CardHeader title={i.title} action={<IconButton onClick={() => Router.push('/posts/[id]', `/posts/${i.id}`)}>
+                                        <Visibility/>
+                                    </IconButton>}/>
+                                    <Divider/>
+                                    <div style={{paddingLeft: 10, paddingRight: 10}}>
+                                        <Highlight>
                                             {i.content}
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
+                                        </Highlight>
+                                    </div>
+                                </Card>
                             ))
                         }
-                    </Grid>
+                    </InfiniteScroll>
                 </Container>
             </div>
         )
