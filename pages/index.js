@@ -63,7 +63,14 @@ export default class Home extends React.Component {
                                     <Divider/>
                                     <div style={{paddingLeft: 10, paddingRight: 10}}>
                                         <Highlight>
-                                            {i.content}
+                                            {(() => {
+                                                const it = i.content.split('\n')
+                                                if (it.length > 3) {
+                                                    return it.slice(0,2) + '\n...'
+                                                } else {
+                                                    return it.join('\n')
+                                                }
+                                            })()}
                                         </Highlight>
                                     </div>
                                 </Card>
