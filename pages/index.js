@@ -66,7 +66,7 @@ export default class Home extends React.Component {
                                             {(() => {
                                                 const it = i.content.split('\n')
                                                 if (it.length > 3) {
-                                                    return it.slice(0,2) + '\n...'
+                                                    return it.slice(0,4) + '\n...'
                                                 } else {
                                                     return it.join('\n')
                                                 }
