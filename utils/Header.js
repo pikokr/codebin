@@ -1,5 +1,5 @@
 import React from 'react'
-import {fade, Toolbar, Typography} from "@material-ui/core"
+import {fade, IconButton, Toolbar, Typography} from "@material-ui/core"
 import AppBar from "@material-ui/core/AppBar"
 import InputBase from "@material-ui/core/InputBase"
 import {Search} from "@material-ui/icons"
@@ -58,11 +58,34 @@ const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    mobileSearchIcon: {
+        [theme.breakpoints.up('md')]: {
+            display: 'none'
+        }
+    }
 }))
 
 
 const Header = ({onSearch}) => {
     const classes = useStyles()
+
+    const searchArea = onSearch &&
+        <>
+            <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                    <Search/>
+                </div>
+                <InputBase
+                    placeholder="검색"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{'aria-label': 'search'}}
+                    onChange={onSearch}
+                />
+            </div>
+        </>
 
     return (
         <AppBar position="fixed">
@@ -74,21 +97,11 @@ const Header = ({onSearch}) => {
                 </Typography>
                 <div style={{flexGrow: 1}}/>
                 {
-                    onSearch && <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <Search/>
-                        </div>
-                        <InputBase
-                            placeholder="검색"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{'aria-label': 'search'}}
-                            onChange={onSearch}
-                        />
-                    </div>
+                    searchArea
                 }
+                <IconButton color="inherit" className={classes.mobileSearchIcon}>
+                    <Search/>
+                </IconButton>
             </Toolbar>
         </AppBar>
     )
