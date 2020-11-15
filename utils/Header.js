@@ -7,9 +7,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles"
 import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -29,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
         },
         marginLeft: 0,
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
         },
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
