@@ -46,7 +46,7 @@ class Post extends Component {
                                 </Typography>
                                 <textarea rows={10} style={{
                                     width: '100%'
-                                }}>{i.content}</textarea>
+                                }} value={i.content} onChange={()=>null}/>
                             </div>
                         </Card> : <CircularProgress/>
                     }

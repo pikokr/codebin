@@ -14,6 +14,7 @@ function MyApp({Component, pageProps}) {
     return (<>
         <Head>
             <link rel='stylesheet' href='https://highlightjs.org/static/demo/styles/railscasts.css'/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </Head>
         <CssBaseline/>
         <Component {...pageProps} />
