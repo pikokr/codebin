@@ -5,6 +5,8 @@ import InputBase from "@material-ui/core/InputBase"
 import {Search} from "@material-ui/icons"
 import makeStyles from "@material-ui/core/styles/makeStyles"
 import Link from "next/link";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -29,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             marginLeft: theme.spacing(1),
             width: 'auto',
-        },
-        [theme.breakpoints.down('sm')]: {
-            display: 'none'
         }
     },
     searchIcon: {
@@ -57,9 +56,20 @@ const useStyles = makeStyles((theme) => ({
                 width: '20ch',
             },
         },
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            '&:focus': {
+                width: '100%'
+            }
+        }
     },
     mobileSearchIcon: {
         [theme.breakpoints.up('md')]: {
+            display: 'none'
+        }
+    },
+    searchContainer: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none'
         }
     }
@@ -68,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = ({onSearch}) => {
     const classes = useStyles()
+    const [mobileSearch, setMobileSearch] = React.useState(false)
 
     const searchArea = onSearch &&
         <>
@@ -96,12 +107,17 @@ const Header = ({onSearch}) => {
                     </Link>
                 </Typography>
                 <div style={{flexGrow: 1}}/>
-                {
-                    searchArea
-                }
-                <IconButton color="inherit" className={classes.mobileSearchIcon}>
+                <div className={classes.searchContainer}>
+                    {
+                        searchArea
+                    }
+                </div>
+                <IconButton onClick={()=>setMobileSearch(true)} color="inherit" className={classes.mobileSearchIcon}>
                     <Search/>
                 </IconButton>
+                <Dialog open={mobileSearch} onBackdropClick={()=>setMobileSearch(false)}>
+                    {searchArea}
+                </Dialog>
             </Toolbar>
         </AppBar>
     )
